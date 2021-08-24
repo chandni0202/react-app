@@ -1,35 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import './uniqueUser.scss';
 import { useParams } from 'react-router';
 
 const UserDetails = (props) => {
-    
     const { id } = useParams();
+    const [status, setStatus] = useState(false);
 
+    // calling api to get unique user details
     useEffect(() => {
-        if(props.getUniqueUserData && id){props.getUniqueUserData(id)}
-
+      if (!status) {
+            props.getUniqueUserData(id)
+            setStatus(true)
+        }
     }, [id]
     )
-
     const { uniqueData } = props;
     const data = uniqueData && uniqueData.uniqueData;
-    const addressHTml = (data && data.address && <div>
-        {data.address.city}
-        {data.address.geo && data.address.geo.lat}
-        {data.address.geo && data.address.geo.lng}
-        {data.address.street}
-        {data.address.suite}
-        {data.address.zipcode}
-    </div>)
-    const companyHTml = (data && data.company && <div>
-        {data.company.name}
-        {data.company.catchPhrase}
-        {data.company.bs}
-    </div>)
+    const addressHTml = (data && data.address && <ul>
+        <li><span>City:</span>{data.address.city} </li>
+        <li> <span>Lat: </span>{data.address.geo && data.address.geo.lat}</li>
+        <li> <span>Lng: </span>{data.address.geo && data.address.geo.lng}</li>
+        <li> <span>Street:</span> {data.address.street}</li>
+        <li> <span>Suite: </span> {data.address.suite}</li>
+        <li> <span>Zipcode: </span>{data.address.zipcode}</li>
+      </ul>)
+    const companyHTml = (data && data.company && <ul>
+        <li><span>Name:</span> {data.company.name}</li>
+        <li><span>CatchPhrase: </span>{data.company.catchPhrase}</li>
+        <li><span>Bs:</span>{data.company.bs}</li>
+    </ul>)
+    // returning unique user details
     return (
         <>
-            {data &&
-                <div className="userDetails">
+        {data &&
+            <div className="userDetails">
+                    <div className="header">User Details</div>
                     <div>Name : {data.name || 'NA'}</div>
                     <div>Username : {data.username || 'NA'}</div>
                     <div>Address : {addressHTml || 'NA'}</div>
@@ -38,9 +43,7 @@ const UserDetails = (props) => {
                     <div>Website: {data.website || 'NA'}</div>
                     <div> Company: {companyHTml || 'NA'}</div>
                 </div>
-
             }
-
         </>
     )
 }

@@ -1,3 +1,4 @@
+// mocking userPrams 
 describe("test", () => {
   it('renders correctly', () => {
     jest.mock('react-router', () => ({

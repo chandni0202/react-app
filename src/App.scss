@@ -2,82 +2,81 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-
   table {
     font-size: 1em;
-  
-  
+    border: 1px solid #000;
+    border-collapse: collapse;
+    tr{
+    border-bottom: 1px solid grey;
+   }
+   .detailsContainer{
+    text-align: center;
+    li {
+      list-style: none;
+      text-align: left;
+    }
+    ul span {
+      font-weight: bold;
+    }
+  }
+  .btn-open {
+    background-color: cornflowerblue;
+    color: #fff;
+    width: 80px;
+    height: 35px;
+    font-size: 1em;
+  }
+  .btn-del {
+    background-color:red;
+    color: #fff;
+    width: 80px;
+    height: 35px;
+    font-size: 1em;
+  }
+  .email{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .4em;
+    content: "";
+    border-top: .4em solid;
+    border-right: .4em solid transparent;
+    border-bottom: 0;
+    border-left: .4em solid transparent;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  .name{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .4em;
+    content: "";
+    border-top: .4em solid;
+    border-right: .4em solid transparent;
+    border-bottom: 0;
+    border-left: .4em solid transparent;
+    vertical-align: middle;
+    cursor: pointer;
   }
 
 }
-
-.userDetails  {
-
-  border: 1px solid black;
-  outline: none;
+  .pagination_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5em;
+    button {
+      width: 80px;
+      height: 30px;
+      margin-right: 8px;
+    }
+    .select-item{
+      width: 15%;
+      outline: none;
+      height: 2em;
+    }
+  }
 }
 div{
   margin: 2em;
-}
-
-.btn-open {
-  background-color: cornflowerblue;
-  color: #fff
-
-}
-
-.btn-del {
-  background-color:red;
-  color: #fff
-
-  
-
-}
-
-.detailsContainer{
-  text-align: center;
-
-}
-
-
-.email{
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: .4em;
-  content: "";
-  border-top: .4em solid;
-  border-right: .4em solid transparent;
-  border-bottom: 0;
-  border-left: .4em solid transparent;
-  vertical-align: middle;
-  cursor: pointer;
-
-}
-
-.name{
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: .4em;
-  content: "";
-  border-top: .4em solid;
-  border-right: .4em solid transparent;
-  border-bottom: 0;
-  border-left: .4em solid transparent;
-  vertical-align: middle;
-  cursor: pointer;
-
-}
-
-.select-item{
-  width: 15%;
-  outline: none;
-  height: 4em;
-}
-
-.pagination_container {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 !important;
 }

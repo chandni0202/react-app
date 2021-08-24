@@ -1,6 +1,9 @@
+// test case to check the helper function
 import {compareObjects} from './helper';
+// test data starts here
 const object1 ={"name" : "Murphy"}
 const object2 ={"name" : "Andrew"}
+// test data ends here
 describe("compare objects", () => {
     test('compare result', (done) => {
       try {

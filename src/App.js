@@ -6,6 +6,7 @@ import store from "./store/store";
 import React from 'react';
 import {  BrowserRouter as Router , Switch, Route } from "react-router-dom";
 
+// pa
 const App = () => {
   return (
     <Router>

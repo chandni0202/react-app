@@ -1,3 +1,4 @@
+// helper function  for sorting based on value in obj
 export  const compareObjects = (object1, object2, key) => {
     const obj1 = object1[key].toUpperCase()
     const obj2 = object2[key].toUpperCase()

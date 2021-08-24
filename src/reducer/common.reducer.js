@@ -5,6 +5,7 @@ const initialState = {
   uniqueData: null,
 };
 
+// function to return new status (action + initial state)
 export default function dashboardReducer (state = initialState, action) {
   switch (action.type) {
     case GET_DATA:

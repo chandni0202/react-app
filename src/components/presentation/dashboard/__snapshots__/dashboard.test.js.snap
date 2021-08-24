@@ -6,9 +6,6 @@ Array [
     <tbody>
       <tr>
         <th>
-          ID
-        </th>
-        <th>
           Name
           <span
             className="name"
@@ -48,87 +45,65 @@ Array [
   >
     <select
       className="select-item"
+      defaultValue="4"
       id="select-item"
       onChange={[Function]}
-      value="4"
     >
       <option
         value="2"
       >
-        2/Page
+        2 Per Page
       </option>
       <option
         value="4"
       >
-        4/Page
+        4 Per Page
       </option>
       <option
         value="6"
       >
-        6/Page
+        6 Per Page
       </option>
       <option
         value="8"
       >
-        8/Page
+        8 Per Page
       </option>
       <option
         value="10"
       >
-        10/Page
+        10 Per Page
       </option>
       <option
         value="20"
       >
-        20/Page
+        20 Per Page
       </option>
       <option
         value="50"
       >
-        50/Page
+        50 Per Page
       </option>
     </select>
     <div
       style={
         Object {
           "display": "flex",
-          "margin": "0",
+          "margin": "-2em",
         }
       }
     >
       <div
-        className="dataContainer"
-      />
-      <div
         className="pagination"
       >
         <button
+          disabled={true}
           onClick={[Function]}
         >
-          prev
+          previous
         </button>
         <button
-          onClick={[Function]}
-        >
-          <span>
-            1
-          </span>
-        </button>
-        <button
-          onClick={[Function]}
-        >
-          <span>
-            2
-          </span>
-        </button>
-        <button
-          onClick={[Function]}
-        >
-          <span>
-            3
-          </span>
-        </button>
-        <button
+          id="next"
           onClick={[Function]}
         >
           next

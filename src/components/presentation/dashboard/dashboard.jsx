@@ -3,56 +3,64 @@ import { Link } from 'react-router-dom';
 import { compareObjects, ccompareObjectsReverse } from '../../../helper/helper';
 
 const Dashboard = (props) => {
+
     const { data } = props;
     const [status, statusChange] = useState(true);
-    const [dashboard, setDashboard] = useState(4);
-    const [pageNumber, setPageNumber] = useState(1)
 
+    // Initial number of data per page display set to 4
+    const [dashboard, setDashboard] = useState(4);
+
+    // Initial page no set to 1
+    const [pageNumber, setPageNumber] = useState(1);
+    
+    // get userdata from api
+    useEffect(() => {
+        props.getUserData && props.getUserData() 
+    }, []
+    )
+
+    // handle previous button action
     const handlePrev = () => {
         if (pageNumber === 1) return
         setPageNumber((page) => page - 1);
     }
+    
+    // handle next button action
     const handleNext = () => {
-        const dataLength = document.getElementsByClassName("detailsContainer") && 
-        document.getElementsByClassName("detailsContainer").length;
-        if (dataLength == 0) return
+        const getdata = getPaginatedData();
+        if (getdata && getdata.length == 0) return
         setPageNumber((page) => page + 1);
+    }
 
-    }
-    function changePage(event) {
-        const pageNumber = Number(event.target.textContent);
-        setPageNumber(pageNumber);
-    }
+    // get data to be displayed
     const getPaginatedData = () => {
+        // it will give startindex 
         const startIndex = pageNumber * dashboard - dashboard;
+        // it will give the endindex
         const endIndex = startIndex + dashboard;
+        //It will return a array from startindex to endindex excluding
         return data && data.data && data.data.slice(startIndex, endIndex);
     };
-    const getPaginationGroup = () => {
-        let start = Math.floor((pageNumber - 1) / 3) * 3;
-        return new Array(3).fill().map((_, idx) => start + idx + 1);
-    };
+    
+    // function to select no of items to display per page
     const handleOnPageClick = () => {
         const e = document.getElementById("select-item");
-
         const optionvalue = e && e.value;
-        setDashboard(optionvalue)
-
+        setDashboard(optionvalue);
     }
 
-    useEffect(() => {
-    if(props.getUserData){props.getUserData()}
-    }, []
-    )
-
-    function handleDelete(id) {
-        const element = document.getElementById(`${id}`);
-        if (element && element.parentNode) {
-            element.parentNode.removeChild(element);
+    // handle delete for rows
+    const handleDelete = (id) => {
+        const element = id ? document.getElementById(`${id}`) : "";
+        const checkForChildNode = element && element.parentNode.hasChildNodes();
+        if (checkForChildNode) {
+            if (element && element.parentNode) {
+                return element.parentNode.removeChild(element);
+             }
         }
-
     }
-
+    
+    // sort the table by name
     const sortByName = () => {
         data && data.data && data.data.sort((book1, book2) => {
             if (status) {
@@ -64,6 +72,8 @@ const Dashboard = (props) => {
         })
         statusChange(!status);
     };
+
+     // sort the table by email
     const sortByEmail = () => {
         data && data.data && data.data.sort((book1, book2) => {
             if (status) {
@@ -75,15 +85,13 @@ const Dashboard = (props) => {
         })
         statusChange(!status);
     };
-    const callapi = () => {
-        props.getUniqueUserData(id);
-    }
+    
+    // returning html table
     return (
         <Fragment>
             <table>
                 <tbody>
                     <tr>
-                        <th>ID</th>
                         <th>Name<span className="name" onClick={sortByName}></span></th>
                         <th>UserName</th>
                         <th>Address</th>
@@ -95,22 +103,23 @@ const Dashboard = (props) => {
                     </tr>
                     {getPaginatedData() && getPaginatedData().map((item, index) => {
                         const { address, company } = item;
-                        const addressHTml = (<div>
-                            {address && address.city}
-                            {address && address.geo && address.geo.lat}
-                            {address && address.geo && address.geo.lng}
-                            {address && address.street}
-                            {address && address.suite}
-                            {address && address.zipcode}
-                        </div>)
-                        const companyHTml = (<div>
-                            {company && company.name}
-                            {company && company.catchPhrase}
-                            {company && company.bs}
-                        </div>)
+                        const addressHTml = 
+                        (address && <ul>
+                            <li><span>City:</span>{address.city} </li>
+                            <li> <span>Lat: </span>{address.geo && address.geo.lat}</li>
+                            <li> <span>Lng: </span>{address.geo && address.geo.lng}</li>
+                            <li> <span>Street:</span> {address.street}</li>
+                            <li> <span>Suite: </span> {address.suite}</li>
+                            <li> <span>Zipcode: </span>{address.zipcode}</li>
+                        </ul>)
+                        const companyHTml = 
+                        (company && <ul>
+                            <li><span>Name:</span> {company.name}</li>
+                            <li><span>CatchPhrase: </span>{company.catchPhrase}</li>
+                            <li><span>Bs:</span>{company.bs}</li>
+                        </ul>)
                         return (
                             <tr className="detailsContainer" id={`${item.id}`} key={index}>
-                                <td>{item.id}</td>
                                 <td>{item.name || 'NA'}</td>
                                 <td>{item.username || 'NA'}</td>
                                 <td>{addressHTml || 'NA'}</td>
@@ -118,48 +127,36 @@ const Dashboard = (props) => {
                                 <td>{item.email || 'NA'}</td>
                                 <td>{item.website || 'NA'}</td>
                                 <td>{companyHTml || 'NA'}</td>
-                                <td> <Link to={`./details/${item.id}`}><button onClick={callapi} className="btn-open">Open</button></Link></td>
-                                <td><button className="btn-del" onClick={handleDelete.bind(this, item.id)}>Delete</button></td>
+                                <td> <Link to={`./details/${item.id}`}><button className="btn-open">Open</button></Link></td>
+                                <td><button className="btn-del" onClick={handleDelete.bind(this,item.id)}>Delete</button></td>
                             </tr>
-
-                        )
+                      )
                     })}
                 </tbody>
             </table>
             <div className="pagination_container">
-                <select className="select-item" id="select-item" value={"4"} onChange={handleOnPageClick}>
-                    <option value="2">2/Page</option>
-                    <option value="4" >4/Page</option>
-                    <option value="6">6/Page</option>
-                    <option value="8">8/Page</option>
-                    <option value="10">10/Page</option>
-                    <option value="20">20/Page</option>
-                    <option value="50">50/Page</option>
+                <select className="select-item" id="select-item" defaultValue={"4"} onChange={handleOnPageClick}>
+                    <option value="2">2 Per Page</option>
+                    <option value="4">4 Per Page</option>
+                    <option value="6">6 Per Page</option>
+                    <option value="8">8 Per Page</option>
+                    <option value="10">10 Per Page</option>
+                    <option value="20">20 Per Page</option>
+                    <option value="50">50 Per Page</option>
                 </select>
-                <div style={{ margin: "0", display: "flex" }}>
-
-                    <div className="dataContainer">
-
-                    </div>
+                <div style={{ margin: "-2em", display: "flex" }}>
                     <div className="pagination">
                         <button
                             onClick={handlePrev}
+                            disabled={pageNumber === 1 ? true : false}
                         >
-                            prev
+                        previous
                         </button>
-
-                        {getPaginationGroup() && getPaginationGroup().map((item, index) => (
-                            <button
-                                key={index}
-                                onClick={changePage}
-                            >
-                                <span>{item}</span>
-                            </button>
-                        ))}
                         <button
                             onClick={handleNext}
+                            id="next"
                         >
-                            next
+                        next
                         </button>
                     </div>
                 </div>
@@ -167,5 +164,4 @@ const Dashboard = (props) => {
         </Fragment>
     )
 }
-
 export default Dashboard;
