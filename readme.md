@@ -41,7 +41,7 @@ A react app to display data fetched from an API and perform various actions on t
 
    **npm run test filename**
 
-## Implemented Feautures And Functionalities
+## Features
 
 1. Display data from API in UI
 
