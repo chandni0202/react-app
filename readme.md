@@ -64,6 +64,3 @@ A react app to display data fetched from an API and perform various actions on t
 10. Webpack for bundling
 
 11. Test case using jest.
-   
-<img width="1669" alt="Screenshot 2021-08-24 at 11 52 31 PM" src="https://user-images.githubusercontent.com/31884004/130671017-6c3a278b-a322-4de2-90af-34a332b5c8a4.png">
-
