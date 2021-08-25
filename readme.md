@@ -41,7 +41,7 @@ A react app to display data fetched from an API and perform various actions on t
 
    **npm run test filename**
 
-## Features
+## Features & Functionalities
 
 1. Display data from API in UI
 
@@ -55,11 +55,11 @@ A react app to display data fetched from an API and perform various actions on t
 
 6. Delete action
 
-7. Style using scss and css.
+7. Style using SCSS and CSS.
 
 8. Optimization for api call.
 
-9. Redux for data management.
+9. Redux for state/data management.
 
 10. Webpack for bundling
 

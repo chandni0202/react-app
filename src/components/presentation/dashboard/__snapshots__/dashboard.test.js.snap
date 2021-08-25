@@ -3,7 +3,9 @@
 exports[`renders correctly 1`] = `
 Array [
   <table>
-    <tbody>
+    <tbody
+      id="dashboard_container"
+    >
       <tr>
         <th>
           Name
@@ -37,6 +39,9 @@ Array [
         <th>
           Action
         </th>
+      </tr>
+      <tr>
+        Loading
       </tr>
     </tbody>
   </table>,
@@ -94,6 +99,16 @@ Array [
       }
     >
       <div
+        id="page"
+        style={
+          Object {
+            "marginTop": "2.5em",
+          }
+        }
+      >
+        1
+      </div>
+      <div
         className="pagination"
       >
         <button
@@ -103,6 +118,7 @@ Array [
           previous
         </button>
         <button
+          disabled={false}
           id="next"
           onClick={[Function]}
         >

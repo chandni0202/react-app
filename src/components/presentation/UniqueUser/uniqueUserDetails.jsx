@@ -4,14 +4,10 @@ import { useParams } from 'react-router';
 
 const UserDetails = (props) => {
     const { id } = useParams();
-    const [status, setStatus] = useState(false);
 
     // calling api to get unique user details
     useEffect(() => {
-      if (!status) {
-            props.getUniqueUserData(id)
-            setStatus(true)
-        }
+     props.getUniqueUserData(id)
     }, [id]
     )
     const { uniqueData } = props;

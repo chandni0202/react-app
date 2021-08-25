@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { compareObjects, ccompareObjectsReverse } from '../../../helper/helper';
+import ErrorBoundary from '../errorBoundary';
 
 const Dashboard = (props) => {
-
+    
     const { data } = props;
     const [status, statusChange] = useState(true);
 
@@ -12,6 +13,7 @@ const Dashboard = (props) => {
 
     // Initial page no set to 1
     const [pageNumber, setPageNumber] = useState(1);
+  
     
     // get userdata from api
     useEffect(() => {
@@ -27,15 +29,18 @@ const Dashboard = (props) => {
     
     // handle next button action
     const handleNext = () => {
-        const getdata = getPaginatedData();
-        if (getdata && getdata.length == 0) return
+        let element;
+        getPaginatedData() && getPaginatedData().map((item) => {
+            element = document.getElementById(`${item.id}`)})
+        if (!element) return null
         setPageNumber((page) => page + 1);
-    }
+        setDashboard(4);
+   }
 
     // get data to be displayed
     const getPaginatedData = () => {
         // it will give startindex 
-        const startIndex = pageNumber * dashboard - dashboard;
+        let startIndex = pageNumber * dashboard - dashboard;
         // it will give the endindex
         const endIndex = startIndex + dashboard;
         //It will return a array from startindex to endindex excluding
@@ -46,20 +51,18 @@ const Dashboard = (props) => {
     const handleOnPageClick = () => {
         const e = document.getElementById("select-item");
         const optionvalue = e && e.value;
+       
         setDashboard(optionvalue);
+        setPageNumber(1);
     }
 
     // handle delete for rows
-    const handleDelete = (id) => {
-        const element = id ? document.getElementById(`${id}`) : "";
-        const checkForChildNode = element && element.parentNode.hasChildNodes();
-        if (checkForChildNode) {
-            if (element && element.parentNode) {
-                return element.parentNode.removeChild(element);
-             }
-        }
+    function handleDelete(id){
+        const element = document.getElementById(id);
+        element.remove();
+        setDashboard(dashboard + 1);
     }
-    
+
     // sort the table by name
     const sortByName = () => {
         data && data.data && data.data.sort((book1, book2) => {
@@ -88,9 +91,10 @@ const Dashboard = (props) => {
     
     // returning html table
     return (
-        <Fragment>
+        <ErrorBoundary>
+           <Fragment>
             <table>
-                <tbody>
+                <tbody id= "dashboard_container">
                     <tr>
                         <th>Name<span className="name" onClick={sortByName}></span></th>
                         <th>UserName</th>
@@ -101,9 +105,9 @@ const Dashboard = (props) => {
                         <th>Company</th>
                         <th>Action</th>
                     </tr>
-                    {getPaginatedData() && getPaginatedData().map((item, index) => {
+                    {getPaginatedData() ? getPaginatedData().map((item, index) => {
                         const { address, company } = item;
-                        const addressHTml = 
+                        const addressHTml =
                         (address && <ul>
                             <li><span>City:</span>{address.city} </li>
                             <li> <span>Lat: </span>{address.geo && address.geo.lat}</li>
@@ -119,7 +123,7 @@ const Dashboard = (props) => {
                             <li><span>Bs:</span>{company.bs}</li>
                         </ul>)
                         return (
-                            <tr className="detailsContainer" id={`${item.id}`} key={index}>
+                            <tr className= "detailsContainer" id={`${item.id}`} key={index}>
                                 <td>{item.name || 'NA'}</td>
                                 <td>{item.username || 'NA'}</td>
                                 <td>{addressHTml || 'NA'}</td>
@@ -128,12 +132,13 @@ const Dashboard = (props) => {
                                 <td>{item.website || 'NA'}</td>
                                 <td>{companyHTml || 'NA'}</td>
                                 <td> <Link to={`./details/${item.id}`}><button className="btn-open">Open</button></Link></td>
-                                <td><button className="btn-del" onClick={handleDelete.bind(this,item.id)}>Delete</button></td>
+                                <td><button className="btn-del" onClick={handleDelete.bind(this, item.id)}>Delete</button></td>
                             </tr>
                       )
-                    })}
+                    }) : <tr>Loading</tr>}
                 </tbody>
             </table>
+        
             <div className="pagination_container">
                 <select className="select-item" id="select-item" defaultValue={"4"} onChange={handleOnPageClick}>
                     <option value="2">2 Per Page</option>
@@ -145,6 +150,7 @@ const Dashboard = (props) => {
                     <option value="50">50 Per Page</option>
                 </select>
                 <div style={{ margin: "-2em", display: "flex" }}>
+                    <div id="page" style={{marginTop: "2.5em"}}>{pageNumber}</div>
                     <div className="pagination">
                         <button
                             onClick={handlePrev}
@@ -155,13 +161,16 @@ const Dashboard = (props) => {
                         <button
                             onClick={handleNext}
                             id="next"
+                            disabled={data && data.data && data.data.length/(dashboard)<= pageNumber ? true : false}
                         >
                         next
                         </button>
                     </div>
                 </div>
             </div>
-        </Fragment>
+     </Fragment>
+     </ErrorBoundary>
+
     )
 }
 export default Dashboard;
