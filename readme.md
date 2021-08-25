@@ -3,7 +3,7 @@
 * Technologies Used
 * Setup & Execution
 * Running Unit Test cases
-* Screenshots and Video link for project demo
+* Video and Screenshots for project demo
 
 ## About the Project
 A react app to display data fetched from an API and perform various actions on that data.
@@ -43,6 +43,7 @@ A react app to display data fetched from an API and perform various actions on t
 
 ## Features & Functionalities
 
+**Functional Features**
 1. Display data from API in UI
 
 2. Sorting of data
@@ -55,6 +56,8 @@ A react app to display data fetched from an API and perform various actions on t
 
 6. Delete action
 
+**Non Functional Features**
+
 7. Style using SCSS and CSS.
 
 8. Optimization for api call.
@@ -65,7 +68,7 @@ A react app to display data fetched from an API and perform various actions on t
 
 11. Test case using jest.
 
-Demo Of the Application:
+## Video and Screenshots for project demo
 
 https://user-images.githubusercontent.com/31884004/130809787-8d815315-d611-4699-a76b-2eabc8fd9114.mp4
 
