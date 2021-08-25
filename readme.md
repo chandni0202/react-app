@@ -9,7 +9,7 @@
 A react app to display data fetched from an API and perform various actions on that data.
 
 ## Technologies Used
-   React js,&nbsp;&nbsp; Redux,&nbsp; &nbsp;Webpack,&nbsp;&nbsp;SCSS & CSS,&nbsp;&nbsp;Html,&nbsp;&nbsp;Jest
+   React js,&nbsp;&nbsp;Javascript&nbsp;&nbsp;Redux,&nbsp; &nbsp;Webpack,&nbsp;&nbsp;SCSS & CSS,&nbsp;&nbsp;Html,&nbsp;&nbsp;Jest
 ## Setup & Execution
 
   * Clone the project -
